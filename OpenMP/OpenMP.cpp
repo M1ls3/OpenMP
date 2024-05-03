@@ -75,7 +75,7 @@ long long part_sum(int start_row, int end_row, int num_threads) {
 }
 
 void part_min(int start_row, int end_row, int num_threads) {
-#pragma omp parallel for  num_threads(num_threads)
+#pragma omp parallel for  num_threads(num_threads) // Кількість ітерацій розділена між потоками
     for (int i = start_row; i < end_row; i++) {
         long long row_sum = 0;
         for (int j = 0; j < cols; j++) {
@@ -92,3 +92,7 @@ void part_min(int start_row, int end_row, int num_threads) {
         }
     }
 }
+
+//Виконання ітерацій : Кожен потік виконує свої ітерації незалежно від інших потоків.Це означає, що кожен потік виконує код циклу для свого діапазону індексів.
+//Збір результатів : Після завершення виконання всіх ітерацій кожен потік повертає свій результат.У випадку використання конструкції reduction або critical, результати можуть бути об'єднані або згруповані, щоб отримати загальний результат.
+//Завершення циклу : Коли кожен потік завершив виконання своїх ітерацій, він продовжує виконання наступного коду після циклу, якщо такий є.
